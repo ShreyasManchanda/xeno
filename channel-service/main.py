@@ -13,8 +13,14 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Xenion Channel Service")
 
-set_receipts_url(os.getenv("CRM_RECEIPTS_URL", "http://localhost:8000/api/receipts"))
+url = os.environ.get("CRM_RECEIPTS_URL")
 
+logger.info("ENV CRM_RECEIPTS_URL=%r", url)
+
+if not url:
+    raise RuntimeError("CRM_RECEIPTS_URL is not configured")
+
+set_receipts_url(url)
 
 class Recipient(BaseModel):
     email: Optional[str] = None
