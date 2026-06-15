@@ -3,11 +3,17 @@ import random
 import logging
 from datetime import datetime, timezone
 import httpx
+import os
+
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-CRM_RECEIPTS_URL = "http://localhost:8000/api/receipts"
+
+CRM_RECEIPTS_URL = os.getenv(
+    "CRM_RECEIPTS_URL",
+    "http://localhost:8000/api/receipts"
+)
 
 dead_letter: list[dict] = []
 
