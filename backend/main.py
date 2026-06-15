@@ -37,6 +37,13 @@ app = FastAPI(
 cors_origins_env = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://localhost:3001")
 cors_origins = [origin.strip() for origin in cors_origins_env.split(",") if origin.strip()]
 
+
+import logging
+logger = logging.getLogger("uvicorn")
+logger.warning(f"CORS Origins configured: {cors_origins}")
+
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=cors_origins,
